@@ -2,33 +2,35 @@ package org.example.playersprojectspring.services;
 
 import org.example.playersprojectspring.model.Player;
 import org.example.playersprojectspring.model.PlayerRequest;
+import org.example.playersprojectspring.model.PlayerResponse;
 import org.example.playersprojectspring.repository.PlayerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
     private final PlayerRepository playerRepository;
+    private final PlayerMapper mapper;
 
-    public PlayerService(PlayerRepository playerRepository) {
+    public PlayerService(PlayerRepository playerRepository, PlayerMapper mapper) {
         this.playerRepository = playerRepository;
+        this.mapper = mapper;
     }
     public Player addPlayer(PlayerRequest playerRequest) {
-        Player player = new Player();
-        player.setFirstName(playerRequest.getFirstName());
-        player.setLastName(playerRequest.getLastName());
-        player.setAge(playerRequest.getAge());
-        player.setGrowth(playerRequest.getGrowth());
-        player.setPosition(playerRequest.getPosition());
-        return playerRepository.save(player);
+        Player entity = mapper.toEntity(playerRequest);
+        return playerRepository.save(entity);
     }
 
-    public List<Player> getAllPlayers() {
-        return playerRepository.findAll();
+    public List<PlayerResponse> getAllPlayers() {
+        return playerRepository
+                .findAll()
+                .stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     public Optional<Player> getPlayerById(UUID id) {
@@ -36,14 +38,10 @@ public class PlayerService {
     }
 
     public Player updatePlayer(UUID id, PlayerRequest playerRequest) {
-        return playerRepository.findById(id).map(player -> {
-            player.setFirstName(playerRequest.getFirstName());
-            player.setLastName(playerRequest.getLastName());
-            player.setAge(playerRequest.getAge());
-            player.setGrowth(playerRequest.getGrowth());
-            player.setPosition(playerRequest.getPosition());
-            return playerRepository.save(player);
-        }).orElseThrow(() -> new PlayerNotFoundException("Player not found with id: " + id));
+        Player player = playerRepository.getReferenceById(id);
+        Player mapped = mapper.toUpdate(player);
+        Player saved = playerRepository.save(mapped);
+        return saved;
     }
 
     public void deletePlayer(UUID id) {

@@ -2,6 +2,7 @@ package org.example.playersprojectspring.controller;
 
 import org.example.playersprojectspring.model.Player;
 import org.example.playersprojectspring.model.PlayerRequest;
+import org.example.playersprojectspring.model.PlayerResponse;
 import org.example.playersprojectspring.services.PlayerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class PlayerController {
     }
 
     @GetMapping
-    public List<Player> getAllPlayers() {
+    public List<PlayerResponse> getAllPlayers() {
         return playerService.getAllPlayers();
     }
 
