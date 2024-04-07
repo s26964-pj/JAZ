@@ -1,4 +1,4 @@
-package org.example.playersprojectspring.services;
+package org.example.playersprojectspring.mapper;
 
 import org.example.playersprojectspring.model.Player;
 import org.example.playersprojectspring.model.PlayerRequest;
