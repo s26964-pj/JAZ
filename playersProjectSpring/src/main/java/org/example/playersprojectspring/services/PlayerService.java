@@ -21,6 +21,7 @@ public class PlayerService {
         this.playerRepository = playerRepository;
         this.mapper = mapper;
     }
+
     public Player addPlayer(PlayerRequest playerRequest) {
         Player entity = mapper.toEntity(playerRequest);
         return playerRepository.save(entity);
@@ -38,12 +39,12 @@ public class PlayerService {
         return playerRepository.findById(id);
     }
 
-    public Player updatePlayer(UUID id, PlayerRequest playerRequest) {
-        Player player = playerRepository.getReferenceById(id);
-        Player mapped = mapper.toUpdate(player);
-        Player saved = playerRepository.save(mapped);
-        return saved;
-    }
+      public Player updatePlayer(UUID id, PlayerRequest playerRequest) {
+            Player player = playerRepository.getReferenceById(id);
+            Player mapped = mapper.toUpdate(player);
+            Player saved = playerRepository.save(mapped);
+            return saved;
+        }
 
     public void deletePlayer(UUID id) {
         playerRepository.deleteById(id);

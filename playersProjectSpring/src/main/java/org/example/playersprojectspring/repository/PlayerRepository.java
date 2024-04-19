@@ -9,9 +9,4 @@ import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, UUID> {
-    Player save(Player player);
-
-    List<Player> findAll();
-    Optional<Player> findById(UUID id);
-    void deleteById(UUID id);
 }
