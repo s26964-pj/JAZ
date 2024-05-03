@@ -40,14 +40,13 @@ public class PlayerService {
     }
 
       public Player updatePlayer(UUID id, PlayerRequest playerRequest) {
-            Player player = playerRepository.getReferenceById(id);
+            Player player = playerRepository.getOrThrowException(id);
             Player mapped = mapper.toUpdate(player);
             Player saved = playerRepository.save(mapped);
             return saved;
         }
 
     public void deletePlayer(UUID id) {
-        playerRepository.deleteById(id);
-        System.out.println("Sukces");
+        playerRepository.deleteOrThrowException(id);
     }
 }

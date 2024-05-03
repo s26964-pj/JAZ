@@ -1,5 +1,7 @@
 package org.example.playersprojectspring.model;
 
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import org.example.playersprojectspring.enums.playerPosition;
 
@@ -11,4 +13,7 @@ public class PlayerRequest {
     private int age;
     private int growth;
     private playerPosition position;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 }
