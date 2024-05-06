@@ -19,9 +19,4 @@ public class Player {
 
     @Enumerated
     private playerPosition position;
-
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Team team;
-
 }

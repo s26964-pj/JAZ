@@ -14,12 +14,4 @@ public interface PlayerRepository extends JpaRepository<Player, UUID> {
     default Player getOrThrowException(UUID id) {
         return findById(id).orElseThrow(() -> new EntityNotFoundException("Player not found"));
     }
-
-    default void deleteOrThrowException(UUID id) {
-        try {
-            deleteById(id);
-        } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("Player not found");
-        }
-    }
 }

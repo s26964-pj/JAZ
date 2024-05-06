@@ -3,12 +3,10 @@ package org.example.playersprojectspring.services;
 import org.example.playersprojectspring.mapper.PlayerMapper;
 import org.example.playersprojectspring.model.Player;
 import org.example.playersprojectspring.model.PlayerRequest;
-import org.example.playersprojectspring.model.PlayerResponse;
 import org.example.playersprojectspring.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -22,31 +20,26 @@ public class PlayerService {
         this.mapper = mapper;
     }
 
-    public Player addPlayer(PlayerRequest playerRequest) {
+    public Player createPlayer(PlayerRequest playerRequest) {
         Player entity = mapper.toEntity(playerRequest);
         return playerRepository.save(entity);
     }
 
-    public List<PlayerResponse> getAllPlayers() {
-        return playerRepository
-                .findAll()
-                .stream()
-                .map(mapper::toResponse)
-                .collect(Collectors.toList());
+    public Player getPlayerById(UUID id) {
+        return playerRepository.getOrThrowException(id);
     }
 
-    public Optional<Player> getPlayerById(UUID id) {
-        return playerRepository.findById(id);
-    }
+    public Player updatePlayer(UUID id, PlayerRequest player) {
+        Player existingPlayer = playerRepository.getOrThrowException(id);
 
-      public Player updatePlayer(UUID id, PlayerRequest playerRequest) {
-            Player player = playerRepository.getOrThrowException(id);
-            Player mapped = mapper.toUpdate(player);
-            Player saved = playerRepository.save(mapped);
-            return saved;
-        }
+        Player updatedPlayer = mapper.toEntity(player);
+        updatedPlayer.setId(existingPlayer.getId());
+
+        return playerRepository.save(updatedPlayer);
+    }
 
     public void deletePlayer(UUID id) {
-        playerRepository.deleteOrThrowException(id);
+        Player player = playerRepository.getOrThrowException(id);
+        playerRepository.delete(player);
     }
 }

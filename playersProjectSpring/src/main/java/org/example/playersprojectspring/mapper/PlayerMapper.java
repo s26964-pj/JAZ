@@ -14,7 +14,8 @@ import java.util.List;
 public interface PlayerMapper {
     @Mapping(target = "id", ignore = true)
     Player toEntity(PlayerRequest request);
+
     PlayerResponse toResponse(Player player);
-    List<PlayerResponse> toResponse(List<Player> playerList);
+
     Player toUpdate(Player player);
 }
