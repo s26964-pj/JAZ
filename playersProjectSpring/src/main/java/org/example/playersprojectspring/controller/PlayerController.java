@@ -30,6 +30,7 @@ public class PlayerController {
     public PlayerResponse getPlayerById(@PathVariable UUID id) {
         return playerService.getPlayerById(id);
     }
+
     @GetMapping
     public List<PlayerResponse> getAllPlayers() {
         return playerService.getAllPlayers();

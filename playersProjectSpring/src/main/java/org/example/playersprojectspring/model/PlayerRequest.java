@@ -1,7 +1,5 @@
 package org.example.playersprojectspring.model;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import org.example.playersprojectspring.enums.playerPosition;
 

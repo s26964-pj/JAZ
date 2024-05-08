@@ -40,12 +40,11 @@ public class PlayerService {
                 .collect(Collectors.toList());
     }
 
-    public Player updatePlayer(UUID id, PlayerRequest player) {
+    public Player updatePlayer(UUID id, PlayerRequest playerRequest) {
         Player existingPlayer = playerRepository.getOrThrowException(id);
 
-        Player updatedPlayer = mapper.toEntity(player);
+        Player updatedPlayer = mapper.toEntity(playerRequest);
         updatedPlayer.setId(existingPlayer.getId());
-
         return playerRepository.save(updatedPlayer);
     }
 
