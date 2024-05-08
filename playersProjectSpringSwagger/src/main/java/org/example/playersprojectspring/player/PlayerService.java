@@ -1,5 +1,6 @@
 package org.example.playersprojectspring.player;
 
+import org.example.playersprojectspring.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.stream.Collectors;
 @Service
 public class PlayerService {
     private final PlayerRepository playerRepository;
-    private final PlayerMapper mapper;
+    private final Mapper mapper;
 
-    public PlayerService(PlayerRepository playerRepository, PlayerMapper mapper) {
+    public PlayerService(PlayerRepository playerRepository, Mapper mapper) {
         this.playerRepository = playerRepository;
         this.mapper = mapper;
     }
@@ -25,7 +26,7 @@ public class PlayerService {
         return playerRepository
                 .findAll()
                 .stream()
-                .map(mapper::toResponse)
+                .map(mapper::toEntity)
                 .collect(Collectors.toList());
     }
 

@@ -1,5 +1,6 @@
 package org.example.playersprojectspring.player;
 
+import org.example.playersprojectspring.api.PlayersApi;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/players")
-public class PlayerController {
+public class PlayerController implements PlayersApi {
 
     private final PlayerService playerService;
 

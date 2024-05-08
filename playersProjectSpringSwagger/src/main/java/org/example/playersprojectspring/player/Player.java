@@ -2,6 +2,7 @@ package org.example.playersprojectspring.player;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.example.playersprojectspring.player.position.playerPosition;
 import org.example.playersprojectspring.team.Team;
 
 import java.util.UUID;

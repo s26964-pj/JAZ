@@ -1,21 +1,18 @@
 package org.example.playersprojectspring.team;
 
-import org.example.playersprojectspring.team.Team;
-import org.example.playersprojectspring.team.TeamRepository;
-import org.example.playersprojectspring.team.TeamMapper;
+import org.example.playersprojectspring.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
     private final TeamRepository teamRepository;
-    private final TeamMapper mapper;
+    private final Mapper mapper;
 
-    public TeamService(TeamRepository teamRepository, TeamMapper mapper) {
+    public TeamService(TeamRepository teamRepository, Mapper mapper) {
         this.teamRepository = teamRepository;
         this.mapper = mapper;
     }
@@ -29,7 +26,7 @@ public class TeamService {
         return teamRepository
                 .findAll()
                 .stream()
-                .map(mapper::toResponse)
+                .map(mapper::toEntity)
                 .collect(Collectors.toList());
     }
 
