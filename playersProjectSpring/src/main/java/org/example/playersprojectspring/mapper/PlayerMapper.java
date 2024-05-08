@@ -16,6 +16,4 @@ public interface PlayerMapper {
     Player toEntity(PlayerRequest request);
 
     PlayerResponse toResponse(Player player);
-
-    Player toUpdate(Player player);
 }

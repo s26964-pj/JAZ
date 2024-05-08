@@ -3,6 +3,7 @@ package org.example.playersprojectspring.services;
 import org.example.playersprojectspring.mapper.PlayerMapper;
 import org.example.playersprojectspring.model.Player;
 import org.example.playersprojectspring.model.PlayerRequest;
+import org.example.playersprojectspring.model.PlayerResponse;
 import org.example.playersprojectspring.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,18 @@ public class PlayerService {
         return playerRepository.save(entity);
     }
 
-    public Player getPlayerById(UUID id) {
-        return playerRepository.getOrThrowException(id);
+    public PlayerResponse getPlayerById(UUID id) {
+        Player player = playerRepository.getOrThrowException(id);
+        PlayerResponse playerResponse = mapper.toResponse(player);
+        return playerResponse;
+    }
+
+    public List<PlayerResponse> getAllPlayers() {
+        return playerRepository
+                .findAll()
+                .stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     public Player updatePlayer(UUID id, PlayerRequest player) {
