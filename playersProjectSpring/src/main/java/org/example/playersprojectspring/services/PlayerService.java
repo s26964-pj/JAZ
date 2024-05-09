@@ -21,15 +21,15 @@ public class PlayerService {
         this.mapper = mapper;
     }
 
-    public Player createPlayer(PlayerRequest playerRequest) {
+    public PlayerResponse createPlayer(PlayerRequest playerRequest) {
         Player entity = mapper.toEntity(playerRequest);
-        return playerRepository.save(entity);
+        playerRepository.save(entity);
+        return mapper.toResponse(entity);
     }
 
     public PlayerResponse getPlayerById(UUID id) {
         Player player = playerRepository.getOrThrowException(id);
-        PlayerResponse playerResponse = mapper.toResponse(player);
-        return playerResponse;
+        return mapper.toResponse(player);
     }
 
     public List<PlayerResponse> getAllPlayers() {
@@ -40,12 +40,14 @@ public class PlayerService {
                 .collect(Collectors.toList());
     }
 
-    public Player updatePlayer(UUID id, PlayerRequest playerRequest) {
+    public PlayerResponse updatePlayer(UUID id, PlayerRequest playerRequest) {
         Player existingPlayer = playerRepository.getOrThrowException(id);
 
         Player updatedPlayer = mapper.toEntity(playerRequest);
         updatedPlayer.setId(existingPlayer.getId());
-        return playerRepository.save(updatedPlayer);
+        playerRepository.save(updatedPlayer);
+
+        return mapper.toResponse(updatedPlayer);
     }
 
     public void deletePlayer(UUID id) {
