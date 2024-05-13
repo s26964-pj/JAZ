@@ -25,7 +25,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlayerInput'
+              $ref: '#/components/schemas/Player'
       responses:
         '201':
           description: The created player
@@ -61,7 +61,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlayerInput'
+              $ref: '#/components/schemas/Player'
       responses:
         '200':
           description: The updated player
@@ -104,7 +104,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TeamInput'
+              $ref: '#/components/schemas/Team'
       responses:
         '201':
           description: The created team
@@ -145,7 +145,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TeamInput'
+              $ref: '#/components/schemas/Team'
       responses:
         '200':
           description: The updated team
@@ -185,19 +185,6 @@ components:
           type: integer
           format: int32
           description: The age of the player
-    PlayerInput:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the player
-        age:
-          type: integer
-          format: int32
-          description: The age of the player
-      required:
-        - name
-        - age
     Team:
       type: object
       properties:
@@ -213,17 +200,3 @@ components:
           items:
             $ref: '#/components/schemas/Player'
           description: The list of players in the team
-    TeamInput:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the team
-        listPlayer:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: The list of player IDs in the team
-      required:
-        - name
