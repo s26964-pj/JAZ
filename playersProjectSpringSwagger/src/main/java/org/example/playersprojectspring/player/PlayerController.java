@@ -1,6 +1,6 @@
 package org.example.playersprojectspring.player;
 
-import org.example.playersprojectspring.api.PlayersApi;
+import org.openapitools.api.PlayersApi;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

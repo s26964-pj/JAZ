@@ -137,12 +137,6 @@
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/api/openapi.yaml</inputSpec>
                             <generatorName>spring</generatorName>
-                            <configOptions>
-                                <interfaceOnly>true</interfaceOnly>
-                            </configOptions>
-                            <packageName>org.example.playersprojectspring</packageName>
-                            <apiPackage>org.example.playersprojectspring.api</apiPackage>
-                            <modelPackage>org.example.playersprojectspring.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>
