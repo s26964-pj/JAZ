@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Player and Team API
-  description: API for managing player and team information
+  title: Player API
+  description: API for managing player information
   version: 1.0.0
 servers:
   - url: http://localhost:8080
@@ -9,6 +9,7 @@ paths:
   /players:
     get:
       summary: Get all players
+      operationId: getAllPlayers
       responses:
         '200':
           description: A list of players
@@ -17,41 +18,49 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Player'
+                  $ref: '#/components/schemas/PlayerResponse'
     post:
       summary: Add a new player
+      operationId: addPlayer
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Player'
+              $ref: '#/components/schemas/PlayerRequest'
       responses:
         '201':
           description: The created player
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Player'
+                $ref: '#/components/schemas/PlayerResponse'
   /players/{id}:
     get:
       summary: Get player by ID
+      operationId: getPlayerById
       parameters:
-        - $ref: '#/components/schemas/Player'
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: The player with the specified ID
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Player'
+                $ref: '#/components/schemas/PlayerResponse'
         '404':
           description: Player not found
     put:
       summary: Update player by ID
+      operationId: updatePlayer
       parameters:
-        - in: path
-          name: id
+        - name: id
+          in: path
           required: true
           schema:
             type: string
@@ -61,21 +70,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Player'
+              $ref: '#/components/schemas/PlayerRequest'
       responses:
         '200':
           description: The updated player
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Player'
+                $ref: '#/components/schemas/PlayerResponse'
         '404':
           description: Player not found
     delete:
       summary: Delete player by ID
+      operationId: deletePlayer
       parameters:
-        - in: path
-          name: id
+        - name: id
+          in: path
           required: true
           schema:
             type: string
@@ -85,118 +95,41 @@ paths:
           description: Player deleted successfully
         '404':
           description: Player not found
-  /teams:
-    get:
-      summary: Get all teams
-      responses:
-        '200':
-          description: A list of teams
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Team'
-    post:
-      summary: Add a new team
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Team'
-      responses:
-        '201':
-          description: The created team
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-  /teams/{id}:
-    get:
-      summary: Get team by ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: The team with the specified ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-        '404':
-          description: Team not found
-    put:
-      summary: Update team by ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Team'
-      responses:
-        '200':
-          description: The updated team
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Team'
-        '404':
-          description: Team not found
-    delete:
-      summary: Delete team by ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: Team deleted successfully
-        '404':
-          description: Team not found
 components:
   schemas:
-    Player:
+    PlayerRequest:
       type: object
       properties:
-        id:
+        firstName:
           type: string
-          format: uuid
-          description: The unique identifier for the player
-        name:
+        lastName:
           type: string
-          description: The name of the player
         age:
           type: integer
           format: int32
-          description: The age of the player
-    Team:
+        growth:
+          type: integer
+          format: int32
+        position:
+          $ref: '#/components/schemas/PlayerPosition'
+    PlayerResponse:
       type: object
       properties:
         id:
           type: string
           format: uuid
-          description: The unique identifier for the team
-        name:
+        firstName:
           type: string
-          description: The name of the team
-        listPlayer:
-          type: array
-          items:
-            $ref: '#/components/schemas/Player'
-          description: The list of players in the team
+        lastName:
+          type: string
+        age:
+          type: integer
+          format: int32
+        position:
+          $ref: '#/components/schemas/PlayerPosition'
+    PlayerPosition:
+      type: string
+      enum:
+        - PLAYMAKER
+        - CENTER
+        - WINGER

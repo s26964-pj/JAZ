@@ -1,43 +1,46 @@
 package org.example.playersprojectspring.player;
 
+import lombok.RequiredArgsConstructor;
 import org.openapitools.api.PlayersApi;
+import org.openapitools.model.PlayerRequest;
+import org.openapitools.model.PlayerResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.NativeWebRequest;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/players")
 public class PlayerController implements PlayersApi {
-
-    private final PlayerService playerService;
-
-    public PlayerController(PlayerService playerService) {
-        this.playerService = playerService;
+    @Override
+    public Optional<NativeWebRequest> getRequest() {
+        return PlayersApi.super.getRequest();
     }
 
-    @GetMapping
-    public List<Player> getAllPlayers() {
-        return playerService.getAllPlayers();
+    @Override
+    public ResponseEntity<PlayerResponse> addPlayer(PlayerRequest playerRequest) {
+        return PlayersApi.super.addPlayer(playerRequest);
     }
 
-    @GetMapping("/{id}")
-    public Player getPlayerById(@PathVariable UUID id) {
-        return playerService.getPlayerById(id);
+    @Override
+    public ResponseEntity<Void> deletePlayer(UUID id) {
+        return PlayersApi.super.deletePlayer(id);
     }
 
-    @PostMapping
-    public Player addPlayer(@RequestBody Player player) {
-        return playerService.addPlayer(player);
+    @Override
+    public ResponseEntity<List<PlayerResponse>> getAllPlayers() {
+        return PlayersApi.super.getAllPlayers();
     }
 
-    @PutMapping("/{id}")
-    public Player updatePlayer(@PathVariable UUID id, @RequestBody Player player) {
-        return playerService.updatePlayer(id, player);
+    @Override
+    public ResponseEntity<PlayerResponse> getPlayerById(UUID id) {
+        return PlayersApi.super.getPlayerById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void deletePlayer(@PathVariable UUID id) {
-        playerService.deletePlayer(id);
+    @Override
+    public ResponseEntity<PlayerResponse> updatePlayer(UUID id, PlayerRequest playerRequest) {
+        return PlayersApi.super.updatePlayer(id, playerRequest);
     }
 }

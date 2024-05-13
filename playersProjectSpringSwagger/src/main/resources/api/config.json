@@ -1,0 +1,10 @@
+{
+  "apiPackage": "org.example.playersprojectspring.api",
+  "modelPackage": "org.example.playersprojectspring.model",
+  "hideGenerationTimestamp": true,
+  "useBeanValidation": true,
+  "interfaceOnly": true,
+  "defaultInterfaces": false,
+  "skipDefaultInterface": true,
+  "java8": true
+}
