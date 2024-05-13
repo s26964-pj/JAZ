@@ -1,6 +1,5 @@
 package org.example.playersprojectspring.controller;
 
-import org.example.playersprojectspring.model.Player;
 import org.example.playersprojectspring.model.PlayerRequest;
 import org.example.playersprojectspring.model.PlayerResponse;
 import org.example.playersprojectspring.services.PlayerService;
@@ -22,7 +21,7 @@ public class PlayerController {
     }
 
     @PostMapping
-    public Player createPlayer(@RequestBody PlayerRequest playerRequest) {
+    public PlayerResponse createPlayer(@RequestBody PlayerRequest playerRequest) {
         return playerService.createPlayer(playerRequest);
     }
 
@@ -37,7 +36,7 @@ public class PlayerController {
     }
 
     @PutMapping("/{id}")
-    public Player updatePlayer(@PathVariable UUID id, @RequestBody PlayerRequest playerRequest) {
+    public PlayerResponse updatePlayer(@PathVariable UUID id, @RequestBody PlayerRequest playerRequest) {
         return playerService.updatePlayer(id, playerRequest);
     }
 
