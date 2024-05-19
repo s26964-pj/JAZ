@@ -1,46 +1,48 @@
 package org.example.playersprojectspring.player;
 
-import lombok.RequiredArgsConstructor;
 import org.openapitools.api.PlayersApi;
 import org.openapitools.model.PlayerRequest;
 import org.openapitools.model.PlayerResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 public class PlayerController implements PlayersApi {
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return PlayersApi.super.getRequest();
+
+
+    private final PlayerService playerService;
+
+    public PlayerController(PlayerService playerService) {
+        this.playerService = playerService;
     }
 
     @Override
     public ResponseEntity<PlayerResponse> addPlayer(PlayerRequest playerRequest) {
-        return PlayersApi.super.addPlayer(playerRequest);
+        return ResponseEntity.ok(playerService.addPlayer(playerRequest));
     }
 
     @Override
     public ResponseEntity<Void> deletePlayer(UUID id) {
-        return PlayersApi.super.deletePlayer(id);
+        playerService.deletePlayer(id);
+        return ResponseEntity.noContent().build();
     }
 
     @Override
     public ResponseEntity<List<PlayerResponse>> getAllPlayers() {
-        return PlayersApi.super.getAllPlayers();
+        return ResponseEntity.ok(playerService.getAllPlayers());
     }
 
     @Override
     public ResponseEntity<PlayerResponse> getPlayerById(UUID id) {
-        return PlayersApi.super.getPlayerById(id);
+        return ResponseEntity.ok(playerService.getPlayerById(id));
     }
 
     @Override
     public ResponseEntity<PlayerResponse> updatePlayer(UUID id, PlayerRequest playerRequest) {
-        return PlayersApi.super.updatePlayer(id, playerRequest);
+        return ResponseEntity.ok(playerService.updatePlayer(id, playerRequest));
     }
 }

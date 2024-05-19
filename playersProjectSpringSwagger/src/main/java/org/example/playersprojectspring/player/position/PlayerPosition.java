@@ -1,5 +1,5 @@
 package org.example.playersprojectspring.player.position;
 
-public enum playerPosition {
+public enum PlayerPosition {
     PLAYMAKER, CENTER, WINGER
 }

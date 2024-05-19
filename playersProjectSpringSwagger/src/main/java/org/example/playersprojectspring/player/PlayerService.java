@@ -1,6 +1,8 @@
 package org.example.playersprojectspring.player;
 
 import org.example.playersprojectspring.Mapper;
+import org.openapitools.model.PlayerRequest;
+import org.openapitools.model.PlayerResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,30 +19,33 @@ public class PlayerService {
         this.mapper = mapper;
     }
 
-    public Player addPlayer(Player player) {
+    public PlayerResponse addPlayer(PlayerRequest player) {
         Player entity = mapper.toEntity(player);
-        return playerRepository.save(entity);
+        playerRepository.save(entity);
+        return mapper.toResponse(entity);
     }
 
-    public List<Player> getAllPlayers() {
+    public List<PlayerResponse> getAllPlayers() {
         return playerRepository
                 .findAll()
                 .stream()
-                .map(mapper::toEntity)
+                .map(mapper::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public Player getPlayerById(UUID id) {
-        return playerRepository.getOrThrowException(id);
+    public PlayerResponse getPlayerById(UUID id) {
+        Player player = playerRepository.getOrThrowException(id);
+        return mapper.toResponse(player);
     }
 
-    public Player updatePlayer(UUID id, Player player) {
+    public PlayerResponse updatePlayer(UUID id, PlayerRequest player) {
         Player existingPlayer = playerRepository.getOrThrowException(id);
 
         Player updatedPlayer = mapper.toEntity(player);
         updatedPlayer.setId(existingPlayer.getId());
 
-        return playerRepository.save(updatedPlayer);
+        playerRepository.save(updatedPlayer);
+        return mapper.toResponse(updatedPlayer);
     }
 
     public void deletePlayer(UUID id) {

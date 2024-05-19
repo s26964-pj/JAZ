@@ -115,9 +115,6 @@ components:
     PlayerResponse:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
         firstName:
           type: string
         lastName:

@@ -2,7 +2,7 @@ package org.example.playersprojectspring.player;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.playersprojectspring.player.position.playerPosition;
+import org.example.playersprojectspring.player.position.PlayerPosition;
 import org.example.playersprojectspring.team.Team;
 
 import java.util.UUID;
@@ -20,7 +20,7 @@ public class Player {
     private int growth;
 
     @Enumerated
-    private playerPosition position;
+    private PlayerPosition position;
 
     @ManyToOne
     private Team team;
