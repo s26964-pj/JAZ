@@ -6,6 +6,7 @@ import org.openapitools.model.PlayerResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -34,12 +35,12 @@ public class PlayerService {
     }
 
     public PlayerResponse getPlayerById(UUID id) {
-        Player player = playerRepository.getOrThrowException(id);
+        Player player = playerRepository.getReferenceById(id);
         return mapper.toResponse(player);
     }
 
     public PlayerResponse updatePlayer(UUID id, PlayerRequest player) {
-        Player existingPlayer = playerRepository.getOrThrowException(id);
+        Player existingPlayer = playerRepository.getReferenceById(id);
 
         Player updatedPlayer = mapper.toEntity(player);
         updatedPlayer.setId(existingPlayer.getId());
@@ -49,7 +50,7 @@ public class PlayerService {
     }
 
     public void deletePlayer(UUID id) {
-        Player player = playerRepository.getOrThrowException(id);
+        Player player = playerRepository.getReferenceById(id);
         playerRepository.delete(player);
     }
 }

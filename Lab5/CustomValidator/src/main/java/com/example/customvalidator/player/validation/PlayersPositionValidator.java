@@ -17,8 +17,6 @@ public class PlayersPositionValidator implements ConstraintValidator<Dictionary,
 
     private String tableName;
 
-    @Autowired
-    @Qualifier("dictionaryDataSource")
     private DataSource dataSource;
 
     @Override

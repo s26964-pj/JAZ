@@ -11,7 +11,4 @@ import java.util.stream.Collectors;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, UUID> {
-    default Player getOrThrowException(UUID id) {
-        return findById(id).orElseThrow(() -> new EntityNotFoundException("Player not found"));
-    }
 }
