@@ -1,6 +1,7 @@
 package com.example.customvalidator.player;
 
 import com.example.customvalidator.Mapper;
+import jakarta.transaction.Transactional;
 import org.openapitools.model.PlayerRequest;
 import org.openapitools.model.PlayerResponse;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class PlayerService {
         this.playerRepository = playerRepository;
         this.mapper = mapper;
     }
-
+    @Transactional
     public PlayerResponse addPlayer(PlayerRequest player) {
         Player entity = mapper.toEntity(player);
         playerRepository.save(entity);
@@ -34,12 +35,12 @@ public class PlayerService {
     }
 
     public PlayerResponse getPlayerById(UUID id) {
-        Player player = playerRepository.getOrThrowException(id);
+        Player player = playerRepository.getReferenceById(id);
         return mapper.toResponse(player);
     }
 
     public PlayerResponse updatePlayer(UUID id, PlayerRequest player) {
-        Player existingPlayer = playerRepository.getOrThrowException(id);
+        Player existingPlayer = playerRepository.getReferenceById(id);
 
         Player updatedPlayer = mapper.toEntity(player);
         updatedPlayer.setId(existingPlayer.getId());
@@ -49,7 +50,7 @@ public class PlayerService {
     }
 
     public void deletePlayer(UUID id) {
-        Player player = playerRepository.getOrThrowException(id);
+        Player player = playerRepository.getReferenceById(id);
         playerRepository.delete(player);
     }
 }

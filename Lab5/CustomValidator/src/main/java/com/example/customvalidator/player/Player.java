@@ -20,6 +20,6 @@ public class Player {
     private int age;
     private int growth;
 
-    @Dictionary(value = "position")
+    @Dictionary(tableName = "position")
     private String position;
 }

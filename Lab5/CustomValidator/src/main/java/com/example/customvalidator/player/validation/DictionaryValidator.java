@@ -2,7 +2,6 @@ package com.example.customvalidator.player.validation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import javax.validation.ConstraintValidator;
@@ -12,16 +11,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Component
-public class PlayersPositionValidator implements ConstraintValidator<Dictionary, String> {
+public class DictionaryValidator implements ConstraintValidator<Dictionary, String> {
 
     private String tableName;
 
+    @Autowired
+    @Qualifier("dictionaryDataSource")
     private DataSource dataSource;
 
     @Override
     public void initialize(Dictionary dictionary) {
-        this.tableName = dictionary.value();
+        this.tableName = dictionary.tableName();
     }
 
     @Override
