@@ -1,11 +1,9 @@
-package pl.bookstore.bookshop.order;
+package pl.bookstore.bookshop.model;
 
-import io.swagger.models.auth.In;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import pl.bookstore.bookshop.book.Book;
 
 import java.util.UUID;
 
@@ -13,12 +11,13 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Table(name = "order_table")
 public class Order {
     @Id
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Book book;
 
     private Integer quantity;

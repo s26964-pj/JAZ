@@ -101,6 +101,48 @@ paths:
         '404':
           description: Book not found
 
+  # FILTER
+
+  /books/filter:
+    get:
+      summary: Filter and sort books
+      operationId: filterBooks
+      parameters:
+        - name: genre
+          in: query
+          required: false
+          description: Genre of the book
+          schema:
+            type: string
+        - name: maxPrice
+          in: query
+          required: false
+          description: Maximum price of the book
+          schema:
+            type: number
+            format: double
+        - name: available
+          in: query
+          required: false
+          description: Availability of the book
+          schema:
+            type: boolean
+        - name: sortBy
+          in: query
+          required: false
+          description: Field to sort by
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookDetails'
+
   /orders:
     get:
       summary: Get all order details
@@ -128,8 +170,12 @@ paths:
             schema:
               $ref: '#/components/schemas/OrderRequest'
       responses:
-        '201':
+        '200':
           description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderDetails'
         '400':
           description: Bad request
 

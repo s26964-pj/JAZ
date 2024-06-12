@@ -1,22 +1,23 @@
-package pl.bookstore.bookshop.book;
+package pl.bookstore.bookshop.mapper;
 
 import org.mapstruct.Builder;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
-import pl.bookstore.model.BookDetails;
-import pl.bookstore.model.BookRequest;
+import pl.bookstore.bookshop.model.Order;
+import pl.bookstore.model.OrderDetails;
+import pl.bookstore.model.OrderRequest;
 
 @org.mapstruct.Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR,
         componentModel = "spring",
         builder = @Builder(disableBuilder = true),
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface BookMapper {
+public interface OrderMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "visitor", ignore = true)
-    @Mapping(target = "author", ignore = true)
-    Book toEntity(BookRequest bookRequest);
+    @Mapping(target = "totalPrice", ignore = true)
+    @Mapping(target = "book", ignore = true)
+    Order toEntity (OrderRequest orderRequest);
 
-    @Mapping(target = "authorId", ignore = true)
-    BookDetails toDetails(Book book);
+    @Mapping(target = "orderId", ignore = true)
+    OrderDetails toDetails (Order order);
 }

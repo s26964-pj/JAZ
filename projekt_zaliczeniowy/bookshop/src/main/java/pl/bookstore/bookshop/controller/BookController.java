@@ -1,8 +1,10 @@
-package pl.bookstore.bookshop.book;
+package pl.bookstore.bookshop.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.bookstore.api.BooksApi;
+import pl.bookstore.bookshop.service.BookService;
 import pl.bookstore.model.BookDetails;
 import pl.bookstore.model.BookRequest;
 
@@ -41,6 +43,14 @@ public class BookController implements BooksApi {
     @Override
     public ResponseEntity<BookDetails> updateBook(UUID id, BookRequest bookRequest) {
         return ResponseEntity.ok(bookService.updateBook(id, bookRequest));
+    }
+    @Override
+    public List<BookDetails> filterBooks(
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Boolean available,
+            @RequestParam(required = false) String sortBy) {
+        return bookService.filterAndSortBooks(genre, maxPrice, available, sortBy);
     }
 
     //TODO getMapping -> /book-order -> service.orderBook
