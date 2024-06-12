@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bookstore.bookshop.mapper.BookMapper;
 import pl.bookstore.bookshop.model.Book;
-import pl.bookstore.bookshop.model.BookVisitor;
 import pl.bookstore.bookshop.repository.BookRepository;
 import pl.bookstore.model.BookDetails;
 import pl.bookstore.model.BookRequest;
+import pl.bookstore.model.BookType;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,27 +35,35 @@ public class BookService {
     }
 
     public BookDetails getBookById (UUID id) {
+        incrementVisitCount(id);
         return mapper.toDetails(bookRepository.getReferenceById(id));
     }
-    //TODO filterAndSortBooks
-    public List<Book> filterAndSortBooks(String genre, Double maxPrice, Boolean available, String sortBy) {
+
+    public List<BookDetails> filterAndSortBooks(String title, BookType bookType, Integer maxPages, Double maxPrice, String sortBy) {
         Specification<Book> spec = Specification.where(null);
 
-        if (genre != null) {
-            spec = spec.and(BookSpecifications.hasGenre(genre));
+        if (title != null) {
+            spec = spec.and(BookSpecifications.hasTitle(title));
+        }
+        if (bookType != null) {
+            spec = spec.and(BookSpecifications.hasBookType(bookType));
+        }
+        if (maxPages != null) {
+            spec = spec.and(BookSpecifications.hasPagesLessThanOrEqualTo(maxPages));
         }
         if (maxPrice != null) {
             spec = spec.and(BookSpecifications.hasPriceLessThanOrEqualTo(maxPrice));
         }
-        if (available != null) {
-            spec = spec.and(BookSpecifications.isAvailable(available));
-        }
 
         Sort sort = Sort.by(sortBy != null ? sortBy : "id");
 
-        return bookRepository.findAll(spec, sort);
+        return bookRepository
+                .findAll(spec, sort)
+                .stream()
+                .map(mapper::toDetails)
+                .collect(Collectors.toList());
     }
-    //TODO incrementVisitCount
+
     @Transactional
     public void incrementVisitCount(UUID id) {
         Book book = bookRepository.getReferenceById(id);

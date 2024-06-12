@@ -108,12 +108,24 @@ paths:
       summary: Filter and sort books
       operationId: filterBooks
       parameters:
-        - name: genre
+        - name: title
           in: query
           required: false
-          description: Genre of the book
+          description: Title of the book
           schema:
             type: string
+        - name: bookType
+          in: query
+          required: false
+          description: Type of the book
+          schema:
+            $ref: '#/components/schemas/BookType'
+        - name: maxPages
+          in: query
+          required: false
+          description: Maximum number of pages
+          schema:
+            type: integer
         - name: maxPrice
           in: query
           required: false
@@ -121,12 +133,6 @@ paths:
           schema:
             type: number
             format: double
-        - name: available
-          in: query
-          required: false
-          description: Availability of the book
-          schema:
-            type: boolean
         - name: sortBy
           in: query
           required: false
@@ -196,9 +202,9 @@ paths:
                 properties:
                   bookId:
                     $ref: '#/components/schemas/Uuid'
-                  name:
+                  title:
                     type: string
-                  visits:
+                  visitsCount:
                     type: integer
       responses:
         '200':

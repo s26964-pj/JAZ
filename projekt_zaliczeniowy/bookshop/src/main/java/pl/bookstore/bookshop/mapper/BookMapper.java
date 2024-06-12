@@ -13,10 +13,12 @@ import pl.bookstore.model.BookRequest;
         builder = @Builder(disableBuilder = true),
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface BookMapper {
+
     @Mapping(target = "bookId", ignore = true)
-    @Mapping(target = "visitor", ignore = true)
+    @Mapping(target = "visitorCount", ignore = true)
     @Mapping(target = "author", ignore = true)
     Book toEntity(BookRequest bookRequest);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "authorId", ignore = true)
     BookDetails toDetails(Book book);

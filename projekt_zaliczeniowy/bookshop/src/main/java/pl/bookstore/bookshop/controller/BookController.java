@@ -4,9 +4,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.bookstore.api.BooksApi;
+import pl.bookstore.bookshop.model.Author;
 import pl.bookstore.bookshop.service.BookService;
 import pl.bookstore.model.BookDetails;
 import pl.bookstore.model.BookRequest;
+import pl.bookstore.model.BookType;
 
 import java.util.List;
 import java.util.UUID;
@@ -44,13 +46,10 @@ public class BookController implements BooksApi {
     public ResponseEntity<BookDetails> updateBook(UUID id, BookRequest bookRequest) {
         return ResponseEntity.ok(bookService.updateBook(id, bookRequest));
     }
+
     @Override
-    public List<BookDetails> filterBooks(
-            @RequestParam(required = false) String genre,
-            @RequestParam(required = false) Double maxPrice,
-            @RequestParam(required = false) Boolean available,
-            @RequestParam(required = false) String sortBy) {
-        return bookService.filterAndSortBooks(genre, maxPrice, available, sortBy);
+    public ResponseEntity<List<BookDetails>> filterBooks(String title, BookType bookType, Integer maxPages, Double maxPrice, String sortBy) {
+        return ResponseEntity.ok(bookService.filterAndSortBooks(title, bookType, maxPages, maxPrice, sortBy));
     }
 
     //TODO getMapping -> /book-order -> service.orderBook
