@@ -27,15 +27,5 @@ public class Book {
     private Integer pages;
     private Double price;
 
-    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL)
-    private BookVisitor visitorCount;
-
-    public void incrementVisitorCount() {
-        if (visitorCount == null) {
-            visitorCount = new BookVisitor();
-            visitorCount.setBook(this);
-            visitorCount.setVisitorsCount(0);
-        }
-        visitorCount.setVisitorsCount(visitorCount.getVisitorsCount() + 1);
-    }
+    private Integer visitorCount;
 }

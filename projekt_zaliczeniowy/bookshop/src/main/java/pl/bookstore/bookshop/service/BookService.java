@@ -67,8 +67,10 @@ public class BookService {
     @Transactional
     public void incrementVisitCount(UUID id) {
         Book book = bookRepository.getReferenceById(id);
-        book.incrementVisitorCount();
-        bookRepository.save(book);
+        book.setVisitorCount(book.getVisitorCount()+1);
+        Book updated = book;
+        bookRepository.delete(book);
+        bookRepository.save(updated);
     }
 
     public BookDetails addNewBook (BookRequest bookRequest) {

@@ -23,7 +23,6 @@ public class BookToOrder {
 
     private UUID bookId;
 
-    private String title;
+    private Integer quantity;
 
-    private Integer visitorCout;
 }

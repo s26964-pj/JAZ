@@ -190,7 +190,7 @@ paths:
       summary: Send order report to the book-order module
       tags:
         - BookShop
-      operationId: sendOrderReport
+      operationId: sendBookToOrder
       requestBody:
         required: true
         content:
@@ -198,18 +198,18 @@ paths:
             schema:
               type: array
               items:
-                type: object
-                properties:
-                  bookId:
-                    $ref: '#/components/schemas/Uuid'
-                  title:
-                    type: string
-                  visitsCount:
-                    type: integer
+                $ref: '#/components/schemas/BookToOrderRequest'
       responses:
         '200':
           description: Order report sent successfully
-  /pdf/print:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookToOrderDetails'
+
+  /order-report/pdf/print:
     get:
       summary: Generate PDF report
       description: Generate a PDF report of books to order.
@@ -236,8 +236,7 @@ components:
         title:
           type: string
         authorId:
-          type: integer
-          format: int64
+          $ref: '#/components/schemas/Uuid'
         bookType:
           $ref: '#/components/schemas/BookType'
         pages:
@@ -255,8 +254,7 @@ components:
         title:
           type: string
         authorId:
-          type: integer
-          format: int64
+          $ref: '#/components/schemas/Uuid'
         bookType:
           $ref: '#/components/schemas/BookType'
         pages:
@@ -282,14 +280,35 @@ components:
       type: object
       properties:
         orderId:
-          type: integer
-          format: int64
+          $ref: '#/components/schemas/Uuid'
         quantity:
           type: integer
           format: int64
         totalPrice:
           type: number
           format: double
+
+    # Order
+
+    BookToOrderRequest:
+      type: object
+      properties:
+        bookId:
+          $ref: '#/components/schemas/Uuid'
+        title:
+          type: string
+        visitorCount:
+          type: integer
+          format: int32
+
+    BookToOrderDetails:
+      type: object
+      properties:
+        bookId:
+          $ref: '#/components/schemas/Uuid'
+        quantity:
+          type: integer
+          format: int64
 
     #BookType
 
