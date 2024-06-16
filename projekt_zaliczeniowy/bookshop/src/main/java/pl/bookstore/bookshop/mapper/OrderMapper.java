@@ -19,5 +19,6 @@ public interface OrderMapper {
     Order toEntity (OrderRequest orderRequest);
 
     @Mapping(target = "orderId", ignore = true)
+    @Mapping(target = "bookId", ignore = true)
     OrderDetails toDetails (Order order);
 }

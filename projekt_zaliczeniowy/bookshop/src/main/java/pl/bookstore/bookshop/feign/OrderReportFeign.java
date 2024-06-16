@@ -12,9 +12,9 @@ import java.util.List;
 
 @FeignClient(name = "BookOrder", url = "http://localhost:8081")
 public interface OrderReportFeign {
-    @PostMapping("/bookToOrder/order-report")
+    @PostMapping("/order-report")
     ResponseEntity<List<BookToOrderRequest>> sendBookToOrder(List<BookToOrderRequest> bookToOrderRequest);
 
-    @GetMapping("/bookToOrder/order-report/print")
+    @GetMapping("/order-report/print")
     ResponseEntity<Resource> getPdfWithOrder();
 }
