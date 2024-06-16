@@ -1,12 +1,10 @@
 package pl.bookstore.bookshop.mapper;
 
-import org.mapstruct.Builder;
-import org.mapstruct.Mapping;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import pl.bookstore.bookshop.model.Book;
 import pl.bookstore.model.BookDetails;
 import pl.bookstore.model.BookRequest;
+import pl.bookstore.model.BookToOrderDetails;
 
 @org.mapstruct.Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR,
         componentModel = "spring",

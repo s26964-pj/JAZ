@@ -185,7 +185,7 @@ paths:
         '400':
           description: Bad request
 
-  /order-report:
+  /bookToOrder/order-report:
     post:
       summary: Send order report to the book-order module
       tags:
@@ -209,7 +209,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/BookToOrderDetails'
 
-  /order-report/pdf/print:
+  /bookToOrder/order-report/print:
     get:
       summary: Generate PDF report
       description: Generate a PDF report of books to order.
@@ -268,7 +268,10 @@ components:
 
     OrderRequest:
       type: object
+      required: [bookId,quantity,price]
       properties:
+        bookId:
+          $ref: '#/components/schemas/Uuid'
         quantity:
           type: integer
           format: int64
@@ -281,6 +284,8 @@ components:
       properties:
         orderId:
           $ref: '#/components/schemas/Uuid'
+        bookId:
+          $ref: '#/components/schemas/Uuid'
         quantity:
           type: integer
           format: int64
@@ -292,6 +297,7 @@ components:
 
     BookToOrderRequest:
       type: object
+      required: [bookId, title, visitorCount]
       properties:
         bookId:
           $ref: '#/components/schemas/Uuid'
@@ -304,6 +310,8 @@ components:
     BookToOrderDetails:
       type: object
       properties:
+        id:
+          $ref: '#/components/schemas/Uuid'
         bookId:
           $ref: '#/components/schemas/Uuid'
         quantity:

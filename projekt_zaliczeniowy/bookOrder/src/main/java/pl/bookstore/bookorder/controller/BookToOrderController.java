@@ -3,11 +3,10 @@ package pl.bookstore.bookorder.controller;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import pl.bookstore.api.OrderReportApi;
+import pl.bookstore.api.BookToOrderApi;
 import pl.bookstore.bookorder.service.BookToOrderService;
 import pl.bookstore.model.BookToOrderDetails;
 import pl.bookstore.model.BookToOrderRequest;
@@ -15,7 +14,7 @@ import pl.bookstore.model.BookToOrderRequest;
 import java.util.List;
 
 @RestController
-public class BookToOrderController implements OrderReportApi {
+public class BookToOrderController implements BookToOrderApi {
 
     private final BookToOrderService bookToOrderService;
 

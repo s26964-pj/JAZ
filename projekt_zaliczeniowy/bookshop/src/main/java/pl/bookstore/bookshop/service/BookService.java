@@ -7,9 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.bookstore.bookshop.mapper.BookMapper;
 import pl.bookstore.bookshop.model.Book;
 import pl.bookstore.bookshop.repository.BookRepository;
-import pl.bookstore.model.BookDetails;
-import pl.bookstore.model.BookRequest;
-import pl.bookstore.model.BookType;
+import pl.bookstore.model.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -92,6 +90,15 @@ public class BookService {
 
         return mapper.toDetails(updatedBook);
     }
+    public List<BookToOrderRequest> findAllByVisitorCountGreaterThan(int visitorCount) {
+        List<Book> books = bookRepository.findAllByVisitorCountGreaterThan(visitorCount);
+        return books.stream()
+                .map(this::convertToBookToOrderDetails)
+                .collect(Collectors.toList());
+    }
 
+    private BookToOrderRequest convertToBookToOrderDetails(Book book) {
+        return new BookToOrderRequest(book.getBookId(),book.getTitle(), book.getVisitorCount());
+    }
 
 }

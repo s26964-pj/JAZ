@@ -6,5 +6,6 @@
   "interfaceOnly": true,
   "defaultInterfaces": false,
   "skipDefaultInterface": true,
-  "java8": true
+  "java8": true,
+  "additionalModelTypeAnnotations": "@lombok.Getter\n@lombok.Setter\n@lombok.ToString\n@lombok.RequiredArgsConstructor\n@lombok.AllArgsConstructor"
 }
